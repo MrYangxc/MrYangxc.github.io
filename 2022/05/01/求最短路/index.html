@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/picture/touxiang.jpg">
+  <link rel="icon" href="/picture/touxiang.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="求最短路首先先了解一下最短路的框架。  单源最短路： 求一个点到其他点的最短路多源最短路： 求任意两个点的最短路  稠密图用邻接矩阵存，稀疏图用邻接表存储。  稠密图： m 和 n2 一个级别稀疏图： m 和 n 一个级别  floyd算法floyd优点在于代码实现简单。缺点在于复杂度为o(n^3)，不能用于大规模数据，多源最短路算法。 floyd算法可以算带负权的，但是不能算负权回路。 1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="求最短路">
+<meta property="og:url" content="http://example.com/2022/05/01/%E6%B1%82%E6%9C%80%E7%9F%AD%E8%B7%AF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="求最短路首先先了解一下最短路的框架。  单源最短路： 求一个点到其他点的最短路多源最短路： 求任意两个点的最短路  稠密图用邻接矩阵存，稀疏图用邻接表存储。  稠密图： m 和 n2 一个级别稀疏图： m 和 n 一个级别  floyd算法floyd优点在于代码实现简单。缺点在于复杂度为o(n^3)，不能用于大规模数据，多源最短路算法。 floyd算法可以算带负权的，但是不能算负权回路。 1234">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/title/%E6%B1%82%E6%9C%80%E7%9F%AD%E8%B7%AF.jpg">
+<meta property="article:published_time" content="2022-05-01T14:56:07.000Z">
+<meta property="article:modified_time" content="2022-05-19T12:47:59.450Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="板子">
+<meta property="article:tag" content="图论">
+<meta property="article:tag" content="最短路">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/title/%E6%B1%82%E6%9C%80%E7%9F%AD%E8%B7%AF.jpg">
+  
+  
+  <title>求最短路 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":4},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杨先森的blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/picture/title/%E6%B1%82%E6%9C%80%E7%9F%AD%E8%B7%AF.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="求最短路">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-01 22:56" pubdate>
+        2022年5月1日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      29 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">求最短路</h1>
+            
+            <div class="markdown-body">
+              <h1 id="求最短路"><a href="#求最短路" class="headerlink" title="求最短路"></a>求最短路</h1><p>首先先了解一下最短路的框架。</p>
+<blockquote>
+<p><strong>单源最短路：</strong> 求一个点到其他点的最短路<br><strong>多源最短路：</strong> 求任意两个点的最短路</p>
+</blockquote>
+<p>稠密图用邻接矩阵存，稀疏图用<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E9%82%BB%E6%8E%A5%E8%A1%A8&spm=1001.2101.3001.7020">邻接表</a>存储。</p>
+<blockquote>
+<p><strong>稠密图：</strong> m 和 n2 一个级别<br><strong>稀疏图：</strong> m 和 n 一个级别</p>
+</blockquote>
+<h2 id="floyd算法"><a href="#floyd算法" class="headerlink" title="floyd算法"></a>floyd算法</h2><p>floyd<strong>优点</strong>在于代码实现简单。缺点在于<strong>复杂度</strong>为o(n^3)，不能用于大规模数据，多源最短路算法。</p>
+<p>floyd算法可以算带负权的，但是不能算负权回路。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//初始化</span><br><span class="hljs-type">int</span> INF=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;=n;j++)&#123;<br>        <span class="hljs-keyword">if</span>(i==j) d[i][j]=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">else</span> d[i][j]=INF;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//floyd</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">floyd</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">1</span>;k&lt;=n;k++)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)&#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;=n;j++)&#123;<br>                d[i][j]=<span class="hljs-built_in">min</span>(d[i][j],d[i][k]+d[k][j]);<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-comment">//d[a][b]即为a到b的最短路</span><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="朴素dijkstra算法"><a href="#朴素dijkstra算法" class="headerlink" title="朴素dijkstra算法"></a>朴素dijkstra算法</h2><p>dijkstra算法只能用于计算边权都为正的图，是单源最短路算法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//邻接矩阵</span><br><br><span class="hljs-type">int</span> g[N][N];  <span class="hljs-comment">// 存储每条边</span><br><span class="hljs-type">int</span> dis[N];  <span class="hljs-comment">// 存储1号点到每个点的最短距离</span><br><span class="hljs-type">bool</span> st[N];   <span class="hljs-comment">// 存储每个点的最短路是否已经确定</span><br><br><span class="hljs-comment">// 求1号点到n号点的最短路，如果不存在则返回-1</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(dis, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dis);<br>    dis[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;n; i++)<br>	&#123;<br>		<span class="hljs-type">int</span> t = <span class="hljs-number">-1</span>;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>; j&lt;=n; j++)   <span class="hljs-comment">// 在没有确定最短路中的所有点找出距离最短的那个点 t </span><br>		   <span class="hljs-keyword">if</span>(!st[j] &amp;&amp; (t == <span class="hljs-number">-1</span> || dis[t] &gt; dis[j]))<br>		    t=j;<br>		st[t]=<span class="hljs-literal">true</span>; <span class="hljs-comment">// 代表 t 这个点已经确定最短路了</span><br>		<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>; j&lt;=n; j++) <span class="hljs-comment">// 用 t 更新其他点的最短距离 </span><br>		 dis[j] = <span class="hljs-built_in">min</span>(dis[j],dis[t]+g[t][j]);<br>	 &#125; <br>    <span class="hljs-keyword">if</span> (dis[n] == <span class="hljs-number">0x3f3f3f3f</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">return</span> dis[n];<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="堆优化的dijkstra算法"><a href="#堆优化的dijkstra算法" class="headerlink" title="堆优化的dijkstra算法"></a>堆优化的dijkstra算法</h2><p>朴素版用来计算稠密图，用邻接矩阵存储。而堆优化版用来计算稀疏图，用邻接表存储。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">//链式前向星存储</span><br><br><span class="hljs-type">int</span> n;<br><span class="hljs-type">int</span> h[N],e[N],ne[N],idx;<br><span class="hljs-type">int</span> dis[N];<br><span class="hljs-type">bool</span> st[N];<br><br><span class="hljs-comment">//求1号点到n号点的最短距离，如果不存在，返回-1</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-built_in">memset</span>(dis,<span class="hljs-number">0x3f</span>,<span class="hljs-keyword">sizeof</span> dis);<br>    dis[<span class="hljs-number">1</span>]=<span class="hljs-number">0</span>;<br>    priority_queue&lt;PII,vector&lt;PII&gt;,greater&lt;PII&gt;&gt;heap;<br>    heap.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-number">0</span>,<span class="hljs-number">1</span>&#125;);<span class="hljs-comment">//first距离  second节点</span><br>    <span class="hljs-keyword">while</span>(heap.<span class="hljs-built_in">size</span>())&#123;<br>        <span class="hljs-keyword">auto</span> t=heap.<span class="hljs-built_in">top</span>();<br>        heap.<span class="hljs-built_in">top</span>();<br>        <span class="hljs-type">int</span> dist=t.first,ver=t.second;<br>        <span class="hljs-keyword">if</span>(st[ver]) <span class="hljs-keyword">continue</span>;<br>        st[ver]=<span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=h[ver];i!=<span class="hljs-number">-1</span>;i=ne[i])&#123;<br>            <span class="hljs-type">int</span> j=e[i];<br>            <span class="hljs-keyword">if</span>(dis[j]&gt;dist+w[i])&#123;<br>                dis[j]=dist+w[i];<br>                heap.<span class="hljs-built_in">push</span>(&#123;dis[j],j&#125;);<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(dis[n]==<span class="hljs-number">0x3f3f3f3f</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">return</span> dis[n];<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="ford算法"><a href="#ford算法" class="headerlink" title="ford算法"></a>ford算法</h2><p>ford算法可以用于对于有边数限制要求的最短路，比如求从1号到n号最多经过k条边的最短距离</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-type">int</span> n,m,k;<br><span class="hljs-type">int</span> dis[N],backup[N]; <span class="hljs-comment">//backup数组为上次</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">edges</span><br>&#123;<br>   	<span class="hljs-type">int</span> a,b,w; <span class="hljs-comment">// a-&gt;b权值为w的边 </span><br>&#125;edge[M];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">ford</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">memset</span>(dis,<span class="hljs-number">0x3f</span>,<span class="hljs-keyword">sizeof</span> dis);<br>	dis[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>	<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;k; i++) <br>	&#123;<br>		<span class="hljs-built_in">memcpy</span>(backup,dis,<span class="hljs-keyword">sizeof</span> dis); <span class="hljs-comment">//备份</span><br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>; j&lt;m; j++)   <span class="hljs-comment">// 枚举所有边 </span><br>		&#123;<br>		   <span class="hljs-type">int</span> a = edge[j].a, b = edge[j].b, w=edge[j].w;	<br>		   dis[b] = <span class="hljs-built_in">min</span>(dis[b],backup[a]+w); <span class="hljs-comment">// 用备份更新 </span><br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">if</span>(dis[n] &gt; <span class="hljs-number">0x3f3f3f3f</span>/<span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>	<span class="hljs-keyword">return</span> dis[n];<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="spfa算法"><a href="#spfa算法" class="headerlink" title="spfa算法"></a>spfa算法</h2><p>spfa可以计算没有负环的图，可以有负权。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-type">int</span> n;      <span class="hljs-comment">// 总点数</span><br><span class="hljs-type">int</span> h[N], w[N], e[N], ne[N], idx;       <span class="hljs-comment">// 邻接表存储所有边</span><br><span class="hljs-type">int</span> dis[N];        <span class="hljs-comment">// 存储每个点到1号点的最短距离</span><br><span class="hljs-type">bool</span> st[N];     <span class="hljs-comment">// 存储每个点是否在队列中</span><br><br><span class="hljs-comment">// 求1号点到n号点的最短路距离，如果从1号点无法走到n号点则返回-1</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">spfa</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(dis, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dis);<br>    dis[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    queue&lt;<span class="hljs-type">int</span>&gt; q;<br>    q.<span class="hljs-built_in">push</span>(<span class="hljs-number">1</span>);<br>    st[<span class="hljs-number">1</span>] = <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>())<br>    &#123;<br>        <span class="hljs-keyword">auto</span> t = q.<span class="hljs-built_in">front</span>();<br>        q.<span class="hljs-built_in">pop</span>();<br>        st[t] = <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = h[t]; i != <span class="hljs-number">-1</span>; i = ne[i])<br>        &#123;<br>            <span class="hljs-type">int</span> j = e[i];<br>            <span class="hljs-keyword">if</span> (dis[j] &gt; dis[t] + w[i])<br>            &#123;<br>                dis[j] = dis[t] + w[i];<br>                <span class="hljs-keyword">if</span> (!st[j])     <span class="hljs-comment">// 如果队列中已存在j，则不需要将j重复插入</span><br>                &#123;<br>                    q.<span class="hljs-built_in">push</span>(j);<br>                    st[j] = <span class="hljs-literal">true</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (dis[n] == <span class="hljs-number">0x3f3f3f3f</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">return</span> dis[n];<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="spfa判断有无负环"><a href="#spfa判断有无负环" class="headerlink" title="spfa判断有无负环"></a>spfa判断有无负环</h2><p>如果经过一个环后距离为负，则为负环。</p>
+<figure class="highlight c++"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs c++"><span class="hljs-type">int</span> n;      <span class="hljs-comment">// 总点数</span><br><span class="hljs-type">int</span> h[N], w[N], e[N], ne[N], idx;       <span class="hljs-comment">// 邻接表存储所有边</span><br><span class="hljs-type">int</span> dis[N], cnt[N];        <span class="hljs-comment">// dis[x]存储1号点到x的最短距离，cnt[x]存储1到x的最短路中经过的点数</span><br><span class="hljs-type">bool</span> st[N];     <span class="hljs-comment">// 存储每个点是否在队列中</span><br><br><span class="hljs-comment">// 如果存在负环，则返回true，否则返回false。</span><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">spfa</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// 不需要初始化dist数组</span><br>    queue&lt;<span class="hljs-type">int</span>&gt; q;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<span class="hljs-comment">//所有节点入队</span><br>    &#123;<br>        q.<span class="hljs-built_in">push</span>(i);<br>        st[i] = <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>())<br>    &#123;<br>        <span class="hljs-keyword">auto</span> t = q.<span class="hljs-built_in">front</span>();<br>        q.<span class="hljs-built_in">pop</span>();<br>        st[t] = <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = h[t]; i != <span class="hljs-number">-1</span>; i = ne[i])<br>        &#123;<br>            <span class="hljs-type">int</span> j = e[i];<br>            <span class="hljs-keyword">if</span> (dis[j] &gt; dis[t] + w[i])<br>            &#123;<br>                dis[j] = dis[t] + w[i];<br>                cnt[j] = cnt[t] + <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">if</span> (cnt[j] &gt;= n) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;       <span class="hljs-comment">// 说明存在负环</span><br>                <span class="hljs-keyword">if</span> (!st[j])<br>                &#123;<br>                    q.<span class="hljs-built_in">push</span>(j);<br>                    st[j] = <span class="hljs-literal">true</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<span class="hljs-comment">//不存在负环</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%9B%BE%E8%AE%BA/">图论</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9D%BF%E5%AD%90/">板子</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/">最短路</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/03/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">最小生成树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/29/%E4%BA%8C%E5%88%86%E5%9B%BE/">
+                        <span class="hidden-mobile">二分图</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
