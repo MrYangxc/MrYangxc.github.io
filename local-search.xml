@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>逆元</title>
+    <link href="/2022/06/25/%E9%80%86%E5%85%83/"/>
+    <url>/2022/06/25/%E9%80%86%E5%85%83/</url>
+    
+    <content type="html"><![CDATA[<h1 id="逆元"><a href="#逆元" class="headerlink" title="逆元"></a>逆元</h1><p>若a*x≡1(mod b) ,a,b互质，则称x为a的逆元。</p><p>A&#x2F;B %p&#x3D;A*inv(B) %p ,inv(B)为B的逆元。</p><p><strong>如果b过大，可能会爆精度，且除法不满足同于拆分定理。</strong></p><p>求逆元的三种方法：</p><ul><li>费马小定理</li><li>扩展欧几里得求逆元</li><li>逆元线性筛</li></ul><h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>$$<br>a^{m-1} \equiv 1(mod m) \Rightarrow a *a^{m-2} \equiv 1(mod m)\Rightarrow a^{m-2} \equiv {1 \over a} (modm)<br>$$</p><p>所以a^(m-2)就是a的逆元了。</p><p>计算复杂度为o(logn)。</p><figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> mod = <span class="hljs-number">1e7</span>+<span class="hljs-number">7</span>;<br><br><span class="hljs-comment">//快速幂</span><br><span class="hljs-function">ll <span class="hljs-title">quickpow</span><span class="hljs-params">(ll a, ll b)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (b &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    ll res = <span class="hljs-number">1</span>;<br>    a %= mod;<br>    <span class="hljs-keyword">while</span> (b) &#123;<br>        <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) res = (res * a) % mod;<br>        b &gt;&gt;= <span class="hljs-number">1</span>;<br>        a = (a * a) % mod;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br><span class="hljs-comment">//求逆元</span><br><span class="hljs-function">ll <span class="hljs-title">inv</span> <span class="hljs-params">(ll a)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">quickpow</span>(a,mod<span class="hljs-number">-2</span>);<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="扩展欧几里得"><a href="#扩展欧几里得" class="headerlink" title="扩展欧几里得"></a>扩展欧几里得</h2><p>通过ax+my&#x3D;1，来求x，x为逆元。</p><p>a，m互质。</p><p>复杂度o(logn)。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">ex_gcd</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> &amp;x, <span class="hljs-type">int</span> &amp;y)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (b == <span class="hljs-number">0</span>) &#123;<br>        x = <span class="hljs-number">1</span>;<br>        y = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>    <span class="hljs-type">int</span> r = <span class="hljs-built_in">ex_gcd</span>(b,a%b,x,y);<br>    <span class="hljs-type">int</span> t = x;<br>    x = y;<br>    y = t - a / b * y;<br>    <span class="hljs-keyword">return</span> r;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">mod_reverse</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> </span>&#123;<br>    <span class="hljs-type">int</span> d, x, y;<br>    d = <span class="hljs-built_in">ex_gcd</span>(a,b,x,y);<br>    <span class="hljs-keyword">if</span> (d == <span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-keyword">return</span> (x % b + b) % b;<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="逆元线性筛"><a href="#逆元线性筛" class="headerlink" title="逆元线性筛"></a>逆元线性筛</h2><p>求1，2，3……N的逆元。</p><p>复杂度o(N)。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">const</span> <span class="hljs-type">int</span> mod = <span class="hljs-number">1e7</span>+<span class="hljs-number">7</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> maxn = <span class="hljs-number">10005</span>;<br><span class="hljs-type">int</span> inv[maxn];<br>inv[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt; <span class="hljs-number">10000</span>; i ++ ) &#123;<br>    inv[i] = inv[mod%i] * (mod - mod / i) % mod;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>数学</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>数学</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>欧拉函数</title>
     <link href="/2022/06/01/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/"/>
     <url>/2022/06/01/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/</url>
@@ -78,9 +103,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>板子</tag>
       
     </tags>
     
@@ -105,9 +130,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>板子</tag>
+      
+      <tag>算法</tag>
       
       <tag>图论</tag>
       
@@ -134,9 +159,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>板子</tag>
+      
+      <tag>算法</tag>
       
       <tag>图论</tag>
       
@@ -190,9 +215,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>板子</tag>
       
     </tags>
     
@@ -244,9 +269,9 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>板子</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -315,9 +340,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>板子</tag>
       
     </tags>
     
@@ -396,9 +421,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>板子</tag>
       
       <tag>树状数组</tag>
       
