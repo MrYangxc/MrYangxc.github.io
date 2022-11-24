@@ -4,6 +4,46 @@
   
   
   <entry>
+    <title>github使用方法</title>
+    <link href="/2022/11/24/github%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
+    <url>/2022/11/24/github%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>java笔记</title>
+    <link href="/2022/11/24/java%E7%AC%94%E8%AE%B0/"/>
+    <url>/2022/11/24/java%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>​       <strong>接口我认为就是给出一些没有实现的方法（类似于抽象类），将它们封装到一起，等到某个类要使用的时候，再进行方法重写</strong></p><p>语法：</p><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">A</span> &#123;<br>    <span class="hljs-comment">//属性</span><br>    <span class="hljs-comment">//方法</span><br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span> inplements A &#123;<br>    <span class="hljs-comment">//自己的属性</span><br>    <span class="hljs-comment">//自己的方法</span><br>    <span class="hljs-comment">//必须覆盖的方法</span><br>&#125;<br></code></pre></td></tr></table></figure><h2 id="使用细节"><a href="#使用细节" class="headerlink" title="使用细节"></a>使用细节</h2><ol><li>在接口中，抽象方法可以省略abstract关键字</li><li>在jdk8之前，接口不能有具体方法实现，但是jdk8之后，可以有默认实现方法（通过default实现），以及静态方法（通过static实现）</li><li>接口不能被实例化（类似抽象类）</li><li>一个类可以同时实现多个接口（与继承不同）</li><li>接口中的属性只能是final的，而且是public static final修饰符</li><li>接口也具有多态性</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>java学习笔记</category>
+      
+      <category>接口</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java学习笔记</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>牛客数论刷题之旅1~10题</title>
     <link href="/2022/11/01/%E7%89%9B%E5%AE%A2%E6%95%B0%E8%AE%BA%E5%88%B7%E9%A2%98%E4%B9%8B%E6%97%851-10%E9%A2%98/"/>
     <url>/2022/11/01/%E7%89%9B%E5%AE%A2%E6%95%B0%E8%AE%BA%E5%88%B7%E9%A2%98%E4%B9%8B%E6%97%851-10%E9%A2%98/</url>
@@ -13,14 +53,14 @@
     
     <categories>
       
-      <category>数论</category>
+      <category>题解</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>数论</tag>
+      <tag>题解</tag>
       
     </tags>
     
@@ -46,6 +86,33 @@
     <tags>
       
       <tag>数论</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>MR和PR算法</title>
+    <link href="/2022/09/15/MR%E5%92%8CPR%E7%AE%97%E6%B3%95/"/>
+    <url>/2022/09/15/MR%E5%92%8CPR%E7%AE%97%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="MillerRabin大素数测试算法"><a href="#MillerRabin大素数测试算法" class="headerlink" title="MillerRabin大素数测试算法"></a>MillerRabin大素数测试算法</h1><p>算法原理：费马定理，二次检测定理</p><figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></div></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">ll <span class="hljs-title">mod_mul</span><span class="hljs-params">(ll a, ll b, ll mod)</span></span><br><span class="hljs-function"></span>&#123;<br>    ll res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (b)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>)<br>            res = (res + a) % mod;<br>        a = (a + a) % mod;<br>        b &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br> <br><span class="hljs-function">ll <span class="hljs-title">mod_pow</span><span class="hljs-params">(ll a, ll n, ll mod)</span></span><br><span class="hljs-function"></span>&#123;<br>    ll res = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (n)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (n &amp; <span class="hljs-number">1</span>)<br>            res = <span class="hljs-built_in">mod_mul</span>(res, a, mod);<br>        a = <span class="hljs-built_in">mod_mul</span>(a, a, mod);<br>        n &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br> <br><span class="hljs-comment">// Miller-Rabin随机算法检测n是否为素数</span><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">millerrabin</span><span class="hljs-params">(ll n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">2</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">46856248255981ll</span> || n &lt; <span class="hljs-number">2</span> || !(n &amp; <span class="hljs-number">1</span>))<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    ll m = n - <span class="hljs-number">1</span>, k = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (!(m &amp; <span class="hljs-number">1</span>))<br>    &#123;<br>        k++;<br>        m &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">20</span>; i++)  <span class="hljs-comment">// 20为Miller-Rabin测试的迭代次数</span><br>    &#123;<br>        ll a = <span class="hljs-built_in">rand</span>() % (n - <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>;<br>        ll x = <span class="hljs-built_in">mod_pow</span>(a, m, n);<br>        ll y;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= k; j++)<br>        &#123;<br>            y = <span class="hljs-built_in">mod_mul</span>(x, x, n);<br>            <span class="hljs-keyword">if</span> (y == <span class="hljs-number">1</span> &amp;&amp; x != <span class="hljs-number">1</span> &amp;&amp; x != n - <span class="hljs-number">1</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            x = y;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (y != <span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure><h1 id="Pollard-Rho算法"><a href="#Pollard-Rho算法" class="headerlink" title="Pollard-Rho算法"></a>Pollard-Rho算法</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//要用到__int128</span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> ll <span class="hljs-title">f</span><span class="hljs-params">(ll x,ll c,ll n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> ((lll)x*x+c)%n;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> ll <span class="hljs-title">pollardrho</span><span class="hljs-params">(ll x)</span></span><br><span class="hljs-function"></span>&#123;<br>    ll s=<span class="hljs-number">0</span>,t=<span class="hljs-number">0</span>,c=<span class="hljs-number">1ll</span>*<span class="hljs-built_in">rand</span>()%(x<span class="hljs-number">-1</span>)+<span class="hljs-number">1</span>;<br>    <span class="hljs-type">int</span> stp=<span class="hljs-number">0</span>,goal=<span class="hljs-number">1</span>;<br>    ll val=<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(goal=<span class="hljs-number">1</span>;;goal&lt;&lt;=<span class="hljs-number">1</span>,s=t,val=<span class="hljs-number">1</span>)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(stp=<span class="hljs-number">1</span>;stp&lt;=goal;++stp)<br>        &#123;<br>            t=<span class="hljs-built_in">f</span>(t,c,x);<br>            val=(lll)val*<span class="hljs-built_in">abs</span>(t-s)%x;<br>            <span class="hljs-keyword">if</span>((stp%<span class="hljs-number">127</span>)==<span class="hljs-number">0</span>)<br>            &#123;<br>                ll d=__gcd(val,x);<br>                <span class="hljs-keyword">if</span>(d&gt;<span class="hljs-number">1</span>)<br>                    <span class="hljs-keyword">return</span> d;<br>            &#125;<br>        &#125;<br>        ll d=__gcd(val,x);<br>        <span class="hljs-keyword">if</span>(d&gt;<span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">return</span> d;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>数论</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>数论</tag>
+      
+      <tag>质数</tag>
       
     </tags>
     
@@ -97,11 +164,11 @@
     
     <tags>
       
-      <tag>板子</tag>
+      <tag>算法</tag>
       
       <tag>字符串</tag>
       
-      <tag>算法</tag>
+      <tag>板子</tag>
       
     </tags>
     
@@ -126,11 +193,11 @@
     
     <tags>
       
-      <tag>板子</tag>
+      <tag>算法</tag>
       
       <tag>字符串</tag>
       
-      <tag>算法</tag>
+      <tag>板子</tag>
       
     </tags>
     
@@ -155,11 +222,11 @@
     
     <tags>
       
-      <tag>板子</tag>
+      <tag>算法</tag>
       
       <tag>字符串</tag>
       
-      <tag>算法</tag>
+      <tag>板子</tag>
       
     </tags>
     
@@ -252,14 +319,14 @@
     
     <categories>
       
-      <category>数学</category>
+      <category>数论</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>数学</tag>
+      <tag>数论</tag>
       
     </tags>
     
@@ -277,8 +344,6 @@
     
     <categories>
       
-      <category>数学</category>
-      
       <category>数论</category>
       
     </categories>
@@ -286,9 +351,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>数论</tag>
+      
+      <tag>板子</tag>
       
     </tags>
     
@@ -306,8 +371,6 @@
     
     <categories>
       
-      <category>数学</category>
-      
       <category>数论</category>
       
     </categories>
@@ -315,9 +378,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>数论</tag>
+      
+      <tag>板子</tag>
       
     </tags>
     
@@ -369,9 +432,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>算法</tag>
+      
+      <tag>板子</tag>
       
       <tag>图论</tag>
       
@@ -398,9 +461,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>算法</tag>
+      
+      <tag>板子</tag>
       
       <tag>图论</tag>
       
@@ -508,9 +571,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>算法</tag>
+      
+      <tag>板子</tag>
       
     </tags>
     
