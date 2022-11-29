@@ -4,25 +4,25 @@
   
   
   <entry>
-    <title>github使用方法</title>
-    <link href="/2022/11/24/github%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
-    <url>/2022/11/24/github%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+    <title>java笔记之多线程基础</title>
+    <link href="/2022/11/29/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/"/>
+    <url>/2022/11/29/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
     
-    <content type="html"><![CDATA[<h1 id="Git常用指令"><a href="#Git常用指令" class="headerlink" title="Git常用指令"></a>Git常用指令</h1><p>这是建立在git与github建立连接基础上使用的指令，建立连接的指令跳转到下一个目录</p><blockquote><p><strong>git status</strong>    查看仓库状态</p></blockquote><blockquote><p><strong>git init</strong>    初始化仓库</p></blockquote><blockquote><p><strong>git add file.suffix</strong>    将file文件添加到临时缓存区</p></blockquote><blockquote><p><strong>git commit -m “file”</strong>    将file文件添加到Git仓库</p></blockquote><blockquote><p><strong>git log</strong>    显示提交日志</p></blockquote><blockquote><p><strong>git branch</strong>    查看Git仓库分支状态</p></blockquote><blockquote><p><strong>git branch a</strong>    建立一个名为a的分支</p></blockquote><blockquote><p><strong>git checkout a</strong>    切换到a分支</p></blockquote><blockquote><p><strong>git check out -b a</strong>    直接切换到新建立的a分支</p></blockquote><blockquote><p> <strong>git merge a</strong>    将a分支合并到当前所在的分支</p></blockquote><blockquote><p><strong>git branch -d a</strong>    删除a分支</p></blockquote><blockquote><p><strong>git branch -D a</strong>    如果删除不了，可以大写D强行删除</p></blockquote><blockquote><p><strong>git tag</strong>    查看当前标签记录</p></blockquote><blockquote><p><strong>git tag a</strong>    为当前分支添加一个标签</p></blockquote><blockquote><p><strong>git checkout a</strong>    切换到当前标签下的代码状态</p></blockquote><blockquote><p><strong>git clone http</strong>    克隆想要的项目到当前Git的文件夹下</p></blockquote><h1 id="Git与github建立连接"><a href="#Git与github建立连接" class="headerlink" title="Git与github建立连接"></a>Git与github建立连接</h1><blockquote><p> <strong>ssh-keygen -t rsa</strong>    通过RSA算法生成密钥，将id_rsa.pub文件的内容添加到github上</p></blockquote><blockquote><p> <strong>ssh -T <a href="mailto:&#x67;&#x69;&#116;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#x62;&#46;&#99;&#111;&#109;">&#x67;&#x69;&#116;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#x62;&#46;&#99;&#111;&#109;</a></strong>    测试密钥是否与公钥进行连接</p></blockquote><blockquote><p><strong>git push origin master(main)</strong>    将本地文件推送到仓库中</p></blockquote><blockquote><p><strong>git pull origin master(main)</strong>    将仓库文件获取到本地中</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="多线程基础"><a href="#多线程基础" class="headerlink" title="多线程基础"></a>多线程基础</h1><h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><ul><li>程序：为完成特定任务、用某种语言编写的一组指令的集合</li><li>进程：运行中的程序，比如打开一个电脑软件，就启动了一个进程，操作系统就会为该进程分配内存空间。进程是程序的一次执行过程，或者是正在运行的一个程序，是一个动态过程，有它自身的产生、存在和消亡</li><li>线程：由进程创建，是进程的一个实体，一个进程可以拥有多个线程，比如浏览器同时下载多个文件</li></ul><h2 id="其他概念"><a href="#其他概念" class="headerlink" title="其他概念"></a>其他概念</h2><ul><li>单线曾：同一个时刻，只允许执行一个线程</li><li>多线程：同一个时刻，可以执行多个线程，比如，浏览器同时下载多个文件</li><li>并发：同一个时刻，多个任务交替执行，造成一种“貌似同时”的错觉，简单的说，单核cpu实现的多任务就是并发</li><li>并行：同样给谁看，多个任务同时执行，多核cpu可以实现并行</li></ul><p>创建线程的两种方式：</p><ul><li>继承Thread类，重写run方法</li><li>实现Runnable接口，重写run方法</li></ul><p>由于java是单继承的，在某些情况下一个类可能已经继承了某个父类，这是再用继承Thread类方法创建线程就是不可能的，所以可以通过实现Runnable接口来创建线程</p><p>从java的设计来看，通过继承Thread或者实现Runnable接口来创建线程本质上没有区别，Thread类本身就实现了Runnable接口。实现Runnable接口方式更加时候多个线程共享一个资源的清空，并且避免了单继承的限制</p><h2 id="线程终止"><a href="#线程终止" class="headerlink" title="线程终止"></a>线程终止</h2><ol><li>当线程完成任务后，会自动退出</li><li>可以通过使用变量来控制run方法退出的方式停止线程，即<strong>通知方式</strong></li></ol><h2 id="线程常用方法："><a href="#线程常用方法：" class="headerlink" title="线程常用方法："></a>线程常用方法：</h2><blockquote><p><strong>设置线程名称，使之与参数name相同：</strong>    setName()</p><p><strong>返回该线程的名称：</strong>    getName()</p><p><strong>执行线程：</strong>    start()</p><p><strong>调用线程run方法：</strong>    run()</p><p><strong>更改线程的优先级：</strong>    setPriority()</p><p><strong>获取线程的优先级：</strong>    getPriority()</p><p><strong>使线程休眠：</strong>    sleep()</p><p><strong>终端线程：</strong>    interrupt()</p></blockquote><p><strong>另外两种方法：</strong></p><ol><li>yield()    线程的礼让，让出cpu，让其他线程执行，但礼让的时间不确定，所以也不一定礼让成功</li><li>join()    插队，插队的线程一旦插队成功，则肯定先执行完插入的线程所有的子任务</li></ol><h2 id="用户线程和守护线程"><a href="#用户线程和守护线程" class="headerlink" title="用户线程和守护线程"></a>用户线程和守护线程</h2><ol><li>用户线程：也叫工作线程，当线程的任务执行完或通知的方式结束</li><li>守护线程：一般是为工作线程服务的，当所有的用户线程结束，守护线程自动结束</li><li>常见的守护线程：垃圾回收机制</li><li>setDaemon(true)即设置成了守护线程</li></ol><h2 id="线程的六种状态"><a href="#线程的六种状态" class="headerlink" title="线程的六种状态"></a>线程的六种状态</h2><p>在jdk中线程有六种状态</p><ol><li>new 尚未启动的线程处于此状态</li><li>runnable 在java虚拟机中执行的线程处于此状态</li><li>blocked 被阻塞等待监视器锁定的线程处于此状态</li><li>waiting 正在等待另一个线程执行特定动作的线程处于此状态</li><li>timed_waiting 正在等待另一个线程执行动作达到指定等待时间的线程处于此状态</li><li>terminated 已退出的线程处于此状态</li></ol><p>在有些书上面会说有七种，因为他们把runnable细化成ready和running</p><h2 id="线程同步机制"><a href="#线程同步机制" class="headerlink" title="线程同步机制"></a>线程同步机制</h2><p>在多线程编程种，一些敏感数据不允许被多个线程同时访问，此时就使用同步访问技术，保证数据在任何同一时刻，最多有一个线程访问，以保证数据的完整性</p><p>同步方法：用Synchronized修饰</p><h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><p>java语言中，引入了对象互斥锁的概念，来保证共享数据操作的完整性，每个对象都对应于一个可称为“互斥锁”的标记，这个标记用来保证在任一时刻，只能有一个线程来访问该对象，Synchronized来与对象的互斥锁联系。</p><p>同步方法（非静态）的锁可以是this，也可以是其他对象（要求是同一个对象）；同步方法（静态）的锁为当前类本身。</p><h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>多个线程都占用了对方的锁的资源，但不肯相让，导致了死锁。</p><h2 id="释放锁"><a href="#释放锁" class="headerlink" title="释放锁"></a>释放锁</h2><p><strong>释放锁的操作：</strong></p><ol><li>当钱线程的同步方法、同步代码块执行结束</li><li>当前线程在同步代码块、同步方法种遇到break、return</li><li>当前线程在同步代码块、同步方法种出现了未处理的Error或Exception，导致异常结束</li><li>当前线程在同步代码块、同步方法种执行了线程对象的wait()方法，当前线程暂停，并释放锁</li></ol><p><strong>不会释放锁的操作：</strong></p><ol><li>线程执行同步代码块或同步方法时，程序调用Thread.sleep()、Thread.yield()0方法暂停当前线程的执行，不会释放锁</li><li>线程执行同步代码块时，其他线程调用了该线程的suspend()方法将该线程挂起，该吸纳成不会释放锁</li></ol>]]></content>
     
     
     <categories>
       
-      <category>github操作技巧</category>
+      <category>java笔记</category>
+      
+      <category>多线程基础</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>git指令</tag>
-      
-      <tag>github操作技巧</tag>
+      <tag>java笔记</tag>
       
     </tags>
     
@@ -31,9 +31,142 @@
   
   
   <entry>
-    <title>java笔记</title>
-    <link href="/2022/11/24/java%E7%AC%94%E8%AE%B0/"/>
-    <url>/2022/11/24/java%E7%AC%94%E8%AE%B0/</url>
+    <title>java笔记之集合</title>
+    <link href="/2022/11/28/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%9B%86%E5%90%88/"/>
+    <url>/2022/11/28/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%9B%86%E5%90%88/</url>
+    
+    <content type="html"><![CDATA[<h1 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h1><p>保存多个数据使用数组可能会有很多不足的地方，所以引出集合，集合可以动态保存任意多个对象，使用方便。</p><p>集合分为Collection和Map两组，前一个是单列集合，后一个是双列集合。</p><h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><p>Collection实现类有些是有序的（List），有些是无序的（Set）。</p><p>Collection接口没有直接的实现子类，是通过它的子接口List和Set来实现的。</p><h3 id="常用方法："><a href="#常用方法：" class="headerlink" title="常用方法："></a>常用方法：</h3><blockquote><p><strong>添加：</strong>    add()    &#x2F;&#x2F;添加任意Object元素</p><p><strong>添加多个元素：</strong>    addAll()    &#x2F;&#x2F;可以添加一个list</p><p><strong>删除：</strong>    remove()    &#x2F;&#x2F;可以删除指定位置元素，也可以删除某个元素</p><p><strong>删除多个元素：</strong>    removeAll()    &#x2F;&#x2F;可以删除一个list</p><p><strong>查找：</strong>    contains()</p><p><strong>查找多个元素：</strong>    containsAll()    可以查找一个list</p><p><strong>大小：</strong>    size()</p><p><strong>判断是否为空：</strong>    isEmpty()</p><p><strong>清空：</strong>    clear()</p></blockquote><h3 id="遍历方式"><a href="#遍历方式" class="headerlink" title="遍历方式"></a>遍历方式</h3><p>使用Iterator迭代器</p><blockquote><p><strong>判断下一个是否有元素：</strong>    hasNext()</p><p><strong>下移并返回元素：</strong>    next()</p><p><strong>删除当前指针所指的元素：</strong>    remove()</p></blockquote><h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><blockquote><p><strong>在id位置插入e元素：</strong>    add(int id, Object e)</p><p><strong>在id位置插入多个元素：</strong>    addAll(int id, Collection e)</p><p><strong>获取指定id位置的元素：</strong>    git(int id)</p><p><strong>e在集合中首次出现的位置：</strong>    indexOf(Object e)</p><p><strong>删除指定id位置的元素，并且返回：</strong>    Object remove(int id)</p><p><strong>设置指定id位置的元素为e：</strong>    set(int id, Object e)</p><p><strong>返回从begin到end位置的集合：</strong>    subList(int fromIndex, int toIndex)</p></blockquote><h3 id="List三种遍历方式："><a href="#List三种遍历方式：" class="headerlink" title="List三种遍历方式："></a>List三种遍历方式：</h3><ol><li>使用迭代器</li><li>使用增强for</li><li>使用普通for（用get）</li></ol><h3 id="ArrayList介绍"><a href="#ArrayList介绍" class="headerlink" title="ArrayList介绍"></a>ArrayList介绍</h3><p>可以加入null，并且能加入多个重复元素，ArrayList是由数组来实现数据存储的，基本等同于Vector，但是他是线程不安全的（虽然执行效率高），所以在多线程情况下，不使用ArrayList。</p><p>ArrayList维护了一个Object类型的数组elementData（transient修饰，表示该属性不会被序列化）。</p><p>创建ArrayList对象时，使用无参构造器，容量为0，第一次添加，扩容成10，之后每次扩容1.5倍。如果使用指定大小的构造器，之后每次扩容1.5倍。</p><h3 id="Vector介绍"><a href="#Vector介绍" class="headerlink" title="Vector介绍"></a>Vector介绍</h3><p>Vector也是维护了一个数组，但是是protected修饰的。Vector是线程同步即安全的，但是效率不太高，操作方法都带有synchronized修饰。</p><p>Vector与ArrayList扩容方面不同的是，Vector是2倍扩容。</p><h3 id="LinkedList介绍"><a href="#LinkedList介绍" class="headerlink" title="LinkedList介绍"></a>LinkedList介绍</h3><p>LinkedList实现了双向链表和双端队列的特点，线程不安全，不同步。</p><p><strong>如何选用ArrayList还是LinkedList：</strong></p><ol><li>如果查改比较多，选择ArrayList</li><li>如果增删比较多，选择LinkedList</li></ol><h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>Set里面的元素是无序的，所以没有索引，且不允许重复元素。</p><p>和List一样，Set也是Collection的子接口，所以常用方法和Collection接口一样。</p><h3 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h3><p>本质是HashMap（可以通过源码验证），可以存放null，但只能一个null，HashSet不保证元素是有序的，取决于hash之后，再确定索引的结果。</p><p>添加一个元素时，先得到一个hash值，然后转换成索引值，再存储数据表table看这个索引位置是否已经存放元素，如果没有，直接加入，如果有，则用equals比较，遇到相同的就添加失败，不相同则添加在最后。</p><p><strong>扩容机制：</strong>定义一个HashSet，第一次添加时，table数组扩容到16，临界值是16<em>0.75 &#x3D; 12，如果table数组使用到了临界值12，就会扩容16**2 &#x3D; 32，新的临界值就是32</em>0.75 &#x3D; 24。</p><p>在java8中，如果一条链表的元素个数到达了TREEIFY_THRESHOLD（默认是8），并且table大小大于等于MIN_TREEIFY_CAPACITY（默认64），就会进行树化成红黑树，否则仍然采用数组扩容机制。</p><h3 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h3><p>和HashSet基本相同，只是TreeSet是排序的</p><h3 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h3><p>LinkedHashSet是HashSet的子类，LinkedHashSet根据元素的hashCode值来决定元素的存储位置，同时使用链表维护元素的次序，这使得元素看起来是以插入顺序保存的。</p><h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map具有映射关系的数据：Key—Value，key不允许重复，但是value可以重复，key和value都可以为null。</p><h3 id="Map常用方法"><a href="#Map常用方法" class="headerlink" title="Map常用方法"></a>Map常用方法</h3><blockquote><p><strong>添加：</strong>    put(key, value)</p><p><strong>删除：</strong>    remove(key)</p><p><strong>查找：</strong>    get(key)</p><p><strong>个数：</strong>    size()</p><p><strong>判断是否为空：</strong>    isEmpty()</p><p><strong>清空：</strong>    clear()</p><p><strong>查找键是否存在：</strong>    containsKey(key)</p></blockquote><h3 id="Map遍历"><a href="#Map遍历" class="headerlink" title="Map遍历"></a>Map遍历</h3><p>第一种：通过keySet()来取出所有的key放入set中</p><p>第二种：通过values()把所有的value取出放出Collection中</p><p>第三种：通过EntrySet()来获取k-v</p><h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>HaspMap没有实现同步，因此线程不安全，方法没有做同步互斥的操作（没有synchronized修饰），扩容机制和HashSet一样。</p><h3 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h3><p>key是有序的，可以在需要排序Map的时候使用TreeMap，TreeMap也是线程不安全的。</p><h3 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h3><p>HashTable的key和value都不能为null，否则会抛出异常，其他的使用方法基本和HashMap一样。HashTable是线程安全的。</p><h3 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h3><p>Properties类继承自HashTable，并且实现了Map接口。使用特点和HashTable相似。</p><p>Properties还可以用于从xxx.properties文件中，加载数据到Properties类对象，并惊醒读取和修改（xxx.properties文件通常作为配置文件）。</p><h2 id="总结集合的选择"><a href="#总结集合的选择" class="headerlink" title="总结集合的选择"></a>总结集合的选择</h2><p>1、先判断存储类型（单列还是双列）</p><p>对于单列（Collection）：</p><p>​    允许重复用List</p><blockquote><ol><li>增删多：LinkedList    （底层维护了一个双向链表）</li><li>查改多：ArrayList    （底层维护了一个Object类型的可变数组）</li><li>多线程安全时候，可以选用Vector</li></ol></blockquote><p>​    不允许重复用Set</p><blockquote><ol><li>无序：HashSet    （底层是HashMap，维护了一个哈希表，即数组+链表+红黑树）</li><li>排序：TreeSet</li><li>插入和取出顺序一致：LinkedHashset    （底层维护了一个数组+双向链表）</li></ol></blockquote><p>对于双列（Map）：</p><blockquote><ol><li>key无序：HashMap    （jdk7底层维护了数组+链表，jdk8底层维护了数组+链表+红黑树）</li><li>key排序：TreeMap</li><li>key插入和取出顺序一直：LinkedHashMap</li><li>读取文件：Properties</li></ol></blockquote><h2 id="Collections工具类"><a href="#Collections工具类" class="headerlink" title="Collections工具类"></a>Collections工具类</h2><p>Collections是一个操作List、Set和Map等集合的工具，它提供了一系列静态的方法对集合元素进行排序、查询和修改等操作。</p><blockquote><p><strong>反转：</strong>    reverse(List)</p><p><strong>随机排序：</strong>    shuffle(List)</p><p><strong>排序：</strong>    sort(List)</p><p><strong>交换：</strong>    swap(List, int, int)    &#x2F;&#x2F;可以加Comparator自定义</p><p><strong>最大值：</strong>    max(Collection)    &#x2F;&#x2F;可以加Comparator自定义</p><p><strong>最小值：</strong>    min(Collection)    &#x2F;&#x2F;可以加Comparator自定义</p><p><strong>元素出现次数：</strong>    frequency(Collection, Object)</p><p><strong>拷贝：</strong>    copy(List a, List b)</p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>java笔记</category>
+      
+      <category>集合</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java笔记</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>java笔记之String</title>
+    <link href="/2022/11/27/java%E7%AC%94%E8%AE%B0%E4%B9%8BString/"/>
+    <url>/2022/11/27/java%E7%AC%94%E8%AE%B0%E4%B9%8BString/</url>
+    
+    <content type="html"><![CDATA[<h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><p>String的字符使用Unicode字符编码，一个字符占两个字节。</p><p>创建String常用方式：</p><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//直接赋值</span><br><span class="hljs-type">String</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Mr.Yang&quot;</span>;<br><span class="hljs-comment">//调用构造器</span><br><span class="hljs-type">String</span> <span class="hljs-variable">s2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>();<br><span class="hljs-type">String</span> <span class="hljs-variable">s3</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(String original);<br><span class="hljs-type">String</span> <span class="hljs-variable">s4</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-type">char</span>[] a);<br><span class="hljs-type">String</span> <span class="hljs-variable">s5</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-type">char</span>[] a, <span class="hljs-type">int</span> startIndex, <span class="hljs-type">int</span> count);<br></code></pre></td></tr></table></figure><p><strong>直接赋值：</strong>先从常量池查看是否有“MrYang”数据空间，如果有，直接指向；如果没有，则创建，然后指向，<strong>最终指向的时常量池中的空间地址</strong>。</p><p><strong>调用构造器：</strong>先在堆中创建空间，里面维护了value的属性，然后指向常量池里的MrYang空间。如果没有“MrYang”，则重新创建，如果有，则直接通过value指向。<strong>最终指向的时堆中的空间地址</strong>。</p><blockquote><p><strong>重要规则：</strong>String a &#x3D; “ab” + “cd”，是常量相加，在常量池里处理；String s &#x3D; a + b，变量相加，在堆中处理</p></blockquote><p>注意：但是String类是保存字符串常量的，每次更新都需要重新开辟空间，效率较低，因此还有StringBuilder和StringBuffer来增强String的功能</p><h1 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h1><p>表示可变的字符序列，可以对字符串内容进行增删，StringBuffer是一个容器。</p><p><strong>StringBuffer</strong>字符内容都是存在char[] value中，但是这个value没有final修饰，所以可以进行变化，不用每次都创建新对象。</p><h2 id="String和StringBuffer相互转换"><a href="#String和StringBuffer相互转换" class="headerlink" title="String和StringBuffer相互转换"></a>String和StringBuffer相互转换</h2><p><strong>String转换成StringBuffer</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;MrYang&quot;</span>;<br><br><span class="hljs-comment">//方法一</span><br><span class="hljs-type">StringBuffer</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuffer</span>(s);<br><br><span class="hljs-comment">//方法二</span><br><span class="hljs-type">StringBuffer</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuffer</span>();<br>str = str.append(s);<br></code></pre></td></tr></table></figure><p><strong>StringBuffer转换成String</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">StringBuffer</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuffer</span>(<span class="hljs-string">&quot;MrYang&quot;</span>);<br><br><span class="hljs-comment">//方法一</span><br><span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> str.toString();<br><br><span class="hljs-comment">//方法二</span><br><span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(str);<br></code></pre></td></tr></table></figure><h2 id="StringBuffer常用方法"><a href="#StringBuffer常用方法" class="headerlink" title="StringBuffer常用方法"></a>StringBuffer常用方法</h2><blockquote><p><strong>增：</strong>    append()</p><p><strong>删：</strong>    delete（begin, end)</p><p><strong>改：</strong>    replace(begin, end, “s”) （长度可以不相同）</p><p><strong>查：</strong>    int id &#x3D; str.indexOf(“abc”)</p><p><strong>插：</strong>    insert(begin, “abc”)</p></blockquote><h1 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h1><p>一个可变的字符序列，此类提供一个与Stringbuffer兼容的API，但不保证同步（多线程时不安全）。该类被设计用作StringBuffer的简易替换，用在字符串缓冲区被<strong>单个线程</strong>使用的时候。单线程时，推荐使用，会比StringBuffer快。</p><h2 id="三者比较"><a href="#三者比较" class="headerlink" title="三者比较"></a>三者比较</h2><ul><li>如果字符串存在大量的修改操作，并且在单线程的情况，使用StringBuilder</li><li>如果字符串存在大量的修改操作，并且在多线程的情况，使用StringBuffer</li><li>如果字符串很少修改，且被多个对象引用，使用String，比如配置信息</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>java笔记</category>
+      
+      <category>String</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java笔记</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>java笔记之异常</title>
+    <link href="/2022/11/26/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%BC%82%E5%B8%B8/"/>
+    <url>/2022/11/26/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%BC%82%E5%B8%B8/</url>
+    
+    <content type="html"><![CDATA[<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>java语言中，将程序执行中发生的不正常情况称为“异常”。（开发过程中的语法错误和逻辑错误不是异常）</p><p>执行过程中所发生的异常事件可分为两大类：</p><ol><li>Error：Java虚拟机无法解决的严重问题。比如JVM系统内部错误、资源耗尽等严重情况。（Error是严重错误，会导致程序崩溃）</li><li>Exception：其他因为编程错误或偶然的外在因素导致的一般性问题，可以使用针对性的代码进行处理。比如空指针访问，试图杜旭不存在的文件，网络连接中断等等。（Exception可以分为两大类：运行异常和编译异常）</li></ol><h2 id="一般性异常介绍"><a href="#一般性异常介绍" class="headerlink" title="一般性异常介绍"></a>一般性异常介绍</h2><p>对于运行异常，可以不作处理，因为这类异常很普遍，若全部处理可能对程序的可读性和运行效率产生影响。</p><p>对于编译异常，是要求必须处理的异常。</p><h3 id="常见的运行异常"><a href="#常见的运行异常" class="headerlink" title="常见的运行异常"></a>常见的运行异常</h3><p>常见的运行异常包括五类：</p><ol><li>NullPointerException 空指针异常</li><li>ArithmeticException 数学运算异常</li><li>ArrayIndexOutOfBoundsException 数组下标越界异常</li><li>ClassCastException 类型转换异常</li><li>NumberFormatException 数字格式不正确异常[]</li></ol><h3 id="常见的编译异常"><a href="#常见的编译异常" class="headerlink" title="常见的编译异常"></a>常见的编译异常</h3><ol><li>SQLException 操作数据库时，查询表可能发生异常</li><li>IOException 操作文件时，发生的异常</li><li>FileNotFoundException 当操作一个不存在的文件时，发生异常</li><li>EOFException 加载类，而该类不存在时，异常</li><li>IllegalArguementException 参数异常</li></ol><h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>异常处理方式：</p><p><strong>1、try-catch-finally</strong></p><p><strong>可以有多个catch语句，对于不同的业务进行处理，要求子类异常在父类异常前面，也可以没有catch语句，出现异常直接执行finally，然后程序崩溃或者退出</strong></p><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//try-catch-finally</span><br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-comment">//可能出现异常的代码</span><br>&#125;<span class="hljs-keyword">catch</span>(Exception e) &#123;<br>    <span class="hljs-comment">//捕获到异常，异常发生时，将异常封装成e，传递给catch，程序员自己处理</span><br>    <span class="hljs-comment">//如果没有发生异常，catch代码不执行</span><br>&#125;<span class="hljs-keyword">finally</span> &#123;<br>    <span class="hljs-comment">//不管是否发生异常，始终执行finally</span><br>    <span class="hljs-comment">//通常，将释放资源这类的代码放在finally</span><br>&#125;<br></code></pre></td></tr></table></figure><p><strong>2、throws</strong></p><p><strong>写在方法声明中，如果可能发生异常，但是不能确定如何处理这类异常，可以通过throws让该方法的调用者负责处理。</strong></p><p>注意：</p><ul><li>对于运行异常，程序中如果没有明确处理，默认用throws方法处理。</li><li>子类重写父类方法时，子类抛出的异常类型要么和父类抛出的异常一致，要么时父类抛出异常的子类。</li><li>在向上throws的过程中，如果遇到了try-chatch-finally，相当于处理异常，就可以不必继续throws。</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">eradFile</span><span class="hljs-params">(String file)</span> <span class="hljs-keyword">throws</span> FileNotFoundException &#123;<br>    <span class="hljs-type">FileInputStream</span> <span class="hljs-variable">fis</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(<span class="hljs-string">&quot;d:\\a.txt&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure><p><strong>3、自定义异常</strong></p><p><strong>当程序中出现了某些错误，但是系统并没有给出对应的描述，此时可以自己设计异常类。</strong></p><p>自定义异常继承Exception（属于编译异常），继承RuntiemeException（属于运行异常）（一般继承RuntimeException）</p><h3 id="throw和throws区别"><a href="#throw和throws区别" class="headerlink" title="throw和throws区别"></a>throw和throws区别</h3><blockquote><p>throws  异常处理的一种方式，出现在方法声明处，后面接异常类型</p><p>throw  手动生成异常对象的关键字，出现在方法体中，后面接异常对象</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>java笔记</category>
+      
+      <category>异常</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java笔记</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>java笔记之内部类</title>
+    <link href="/2022/11/25/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%86%85%E9%83%A8%E7%B1%BB/"/>
+    <url>/2022/11/25/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%86%85%E9%83%A8%E7%B1%BB/</url>
+    
+    <content type="html"><![CDATA[<h1 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h1><p><strong>类的五大成员</strong>（面试经常提问）：属性、方法、构造器、代码块、内部类</p><p>内部类最大的特点是可以直接访问私有属性，并且可以体现类与类之间的包含关系，内部类的分类：</p><p><strong>定义在外部类局部位置上（比如方法内）</strong>：</p><ol><li>局部内部类（有类名）</li><li>匿名内部类（没有类名）</li></ol><p><strong>定义在外部类成员位置上</strong>：</p><ol><li>成员内部类（无static修饰）</li><li>静态内部类（有static修饰）</li></ol><h2 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h2><blockquote><p>可以直接访问外部类的所有成员，包括私有的。不能添加访问修饰符，但是可以用final修饰。</p><p>作用域：仅仅在定义它的方法或者代码块中。</p><p>如果外部类和局部内部类的成员重名时，默认遵循就近原则，如果像访问外部类的成员，</p><p>可以通过外部类名.this.成员去访问。</p></blockquote><h2 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h2><p>好处是，可以当作实参直接传递，使得代码简洁高效</p><h3 id="基于接口"><a href="#基于接口" class="headerlink" title="基于接口"></a>基于接口</h3><blockquote><p>当我们定义个一个接口之后，可能需要写多个类来实现接口，并创建对象，但是使用匿名内部类</p><p>只需要写一次类，并创建对象。匿名内部类使用一次就会被销毁。</p><p>匿名内部类是有名字的，计算机底层会给他起名为外部类+$1。</p></blockquote><p>格式：</p><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Outer</span> <span class="hljs-variable">iner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Outer</span>() &#123;<br>    <span class="hljs-comment">//重写方法</span><br>&#125;;<br></code></pre></td></tr></table></figure><h3 id="基于类"><a href="#基于类" class="headerlink" title="基于类"></a>基于类</h3><p>效果同基于接口的</p><p>格式：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//方法一</span><br><span class="hljs-type">Outer</span> <span class="hljs-variable">iner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Outer</span>(参数列表) &#123;<br>    <span class="hljs-comment">//重写方法</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">solve</span><span class="hljs-params">()</span>&#123;<br>        <br>    &#125;<br>&#125;;<br>iner.solve();<br><br><span class="hljs-comment">//方法二</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">Outer</span>(参数列表) &#123;<br>    <span class="hljs-comment">//重写方法</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">solve</span><span class="hljs-params">()</span>&#123;<br>        <br>    &#125;<br>&#125;.solve();<br></code></pre></td></tr></table></figure><h2 id="成员内部类"><a href="#成员内部类" class="headerlink" title="成员内部类"></a>成员内部类</h2><blockquote><p>定义在外部类的成员位置，没有static修饰。</p><p>可以调用外部类的所有成员，方法。如果外部类方法要调用内部类，可以先创建一个对象</p><p>如果其他的类要调用的话，有两种方法，一种可以类似Outer.iner item &#x3D; Outer.new iner();</p><p>另一种如果内部类为私有成员，可以用一个public函数返回一个内部类。</p></blockquote><h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><blockquote><p>定义在外部类的成员位置，有static修饰。</p><p>不能直接访问非静态成员</p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>java笔记</category>
+      
+      <category>内部类</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java笔记</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>git使用方法</title>
+    <link href="/2022/11/24/git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
+    <url>/2022/11/24/git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Git常用指令"><a href="#Git常用指令" class="headerlink" title="Git常用指令"></a>Git常用指令</h1><p>这是建立在git与github建立连接基础上使用的指令，建立连接的指令跳转到下一个目录</p><blockquote><p><strong>git status</strong>    查看仓库状态</p></blockquote><blockquote><p><strong>git init</strong>    初始化仓库</p></blockquote><blockquote><p><strong>git add file.suffix</strong>    将file文件添加到临时缓存区</p></blockquote><blockquote><p><strong>git commit -m “file”</strong>    将file文件添加到Git仓库</p></blockquote><blockquote><p><strong>git log</strong>    显示提交日志</p></blockquote><blockquote><p><strong>git branch</strong>    查看Git仓库分支状态</p></blockquote><blockquote><p><strong>git branch a</strong>    建立一个名为a的分支</p></blockquote><blockquote><p><strong>git checkout a</strong>    切换到a分支</p></blockquote><blockquote><p><strong>git check out -b a</strong>    直接切换到新建立的a分支</p></blockquote><blockquote><p> <strong>git merge a</strong>    将a分支合并到当前所在的分支</p></blockquote><blockquote><p><strong>git branch -d a</strong>    删除a分支</p></blockquote><blockquote><p><strong>git branch -D a</strong>    如果删除不了，可以大写D强行删除</p></blockquote><blockquote><p><strong>git tag</strong>    查看当前标签记录</p></blockquote><blockquote><p><strong>git tag a</strong>    为当前分支添加一个标签</p></blockquote><blockquote><p><strong>git checkout a</strong>    切换到当前标签下的代码状态</p></blockquote><blockquote><p><strong>git clone http</strong>    克隆想要的项目到当前Git的文件夹下</p></blockquote><h1 id="Git与github建立连接"><a href="#Git与github建立连接" class="headerlink" title="Git与github建立连接"></a>Git与github建立连接</h1><blockquote><p> <strong>ssh-keygen -t rsa</strong>    通过RSA算法生成密钥，将id_rsa.pub文件的内容添加到github上</p></blockquote><blockquote><p> <strong>ssh -T <a href="mailto:&#x67;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#99;&#111;&#x6d;">&#x67;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#99;&#111;&#x6d;</a></strong>    测试密钥是否与公钥进行连接</p></blockquote><blockquote><p><strong>git push origin master(main)</strong>    将本地文件推送到仓库中</p></blockquote><blockquote><p><strong>git pull origin master(main)</strong>    将仓库文件获取到本地中</p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>git操作技巧</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>git指令</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>java笔记之接口</title>
+    <link href="/2022/11/24/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%8E%A5%E5%8F%A3/"/>
+    <url>/2022/11/24/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%8E%A5%E5%8F%A3/</url>
     
     <content type="html"><![CDATA[<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>​       <strong>接口我认为就是给出一些没有实现的方法（类似于抽象类），将它们封装到一起，等到某个类要使用的时候，再进行方法重写</strong></p><p>语法：</p><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">A</span> &#123;<br>    <span class="hljs-comment">//属性</span><br>    <span class="hljs-comment">//方法</span><br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span> inplements A &#123;<br>    <span class="hljs-comment">//自己的属性</span><br>    <span class="hljs-comment">//自己的方法</span><br>    <span class="hljs-comment">//必须覆盖的方法</span><br>&#125;<br></code></pre></td></tr></table></figure><h2 id="使用细节"><a href="#使用细节" class="headerlink" title="使用细节"></a>使用细节</h2><ol><li>在接口中，抽象方法可以省略abstract关键字</li><li>在jdk8之前，接口不能有具体方法实现，但是jdk8之后，可以有默认实现方法（通过default实现），以及静态方法（通过static实现）</li><li>接口不能被实例化（类似抽象类）</li><li>一个类可以同时实现多个接口（与继承不同）</li><li>接口中的属性只能是final的，而且是public static final修饰符</li><li>接口也具有多态性</li></ol>]]></content>
     
@@ -50,6 +183,8 @@
     <tags>
       
       <tag>java学习笔记</tag>
+      
+      <tag>接口</tag>
       
     </tags>
     
@@ -365,9 +500,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>数论</tag>
+      
+      <tag>板子</tag>
       
     </tags>
     
@@ -392,9 +527,9 @@
     
     <tags>
       
-      <tag>板子</tag>
-      
       <tag>数论</tag>
+      
+      <tag>板子</tag>
       
     </tags>
     

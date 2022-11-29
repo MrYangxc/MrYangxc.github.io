@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/picture/touxiang.jpg">
+  <link rel="icon" href="/picture/touxiang.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="多线程基础简单介绍 程序：为完成特定任务、用某种语言编写的一组指令的集合 进程：运行中的程序，比如打开一个电脑软件，就启动了一个进程，操作系统就会为该进程分配内存空间。进程是程序的一次执行过程，或者是正在运行的一个程序，是一个动态过程，有它自身的产生、存在和消亡 线程：由进程创建，是进程的一个实体，一个进程可以拥有多个线程，比如浏览器同时下载多个文件  其他概念 单线曾：同一个时刻，只允许执行一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java笔记之多线程基础">
+<meta property="og:url" content="http://example.com/2022/11/29/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="多线程基础简单介绍 程序：为完成特定任务、用某种语言编写的一组指令的集合 进程：运行中的程序，比如打开一个电脑软件，就启动了一个进程，操作系统就会为该进程分配内存空间。进程是程序的一次执行过程，或者是正在运行的一个程序，是一个动态过程，有它自身的产生、存在和消亡 线程：由进程创建，是进程的一个实体，一个进程可以拥有多个线程，比如浏览器同时下载多个文件  其他概念 单线曾：同一个时刻，只允许执行一个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/title/18.jpg">
+<meta property="article:published_time" content="2022-11-29T11:36:49.000Z">
+<meta property="article:modified_time" content="2022-11-29T14:37:56.300Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="java笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/title/18.jpg">
+  
+  
+  <title>java笔记之多线程基础 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":" ","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":4},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杨先森的blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/picture/title/18.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="java笔记之多线程基础">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-11-29 19:36" pubdate>
+        2022年11月29日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">java笔记之多线程基础</h1>
+            
+            <div class="markdown-body">
+              <h1 id="多线程基础"><a href="#多线程基础" class="headerlink" title="多线程基础"></a>多线程基础</h1><h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><ul>
+<li>程序：为完成特定任务、用某种语言编写的一组指令的集合</li>
+<li>进程：运行中的程序，比如打开一个电脑软件，就启动了一个进程，操作系统就会为该进程分配内存空间。进程是程序的一次执行过程，或者是正在运行的一个程序，是一个动态过程，有它自身的产生、存在和消亡</li>
+<li>线程：由进程创建，是进程的一个实体，一个进程可以拥有多个线程，比如浏览器同时下载多个文件</li>
+</ul>
+<h2 id="其他概念"><a href="#其他概念" class="headerlink" title="其他概念"></a>其他概念</h2><ul>
+<li>单线曾：同一个时刻，只允许执行一个线程</li>
+<li>多线程：同一个时刻，可以执行多个线程，比如，浏览器同时下载多个文件</li>
+<li>并发：同一个时刻，多个任务交替执行，造成一种“貌似同时”的错觉，简单的说，单核cpu实现的多任务就是并发</li>
+<li>并行：同样给谁看，多个任务同时执行，多核cpu可以实现并行</li>
+</ul>
+<p>创建线程的两种方式：</p>
+<ul>
+<li>继承Thread类，重写run方法</li>
+<li>实现Runnable接口，重写run方法</li>
+</ul>
+<p>由于java是单继承的，在某些情况下一个类可能已经继承了某个父类，这是再用继承Thread类方法创建线程就是不可能的，所以可以通过实现Runnable接口来创建线程</p>
+<p>从java的设计来看，通过继承Thread或者实现Runnable接口来创建线程本质上没有区别，Thread类本身就实现了Runnable接口。实现Runnable接口方式更加时候多个线程共享一个资源的清空，并且避免了单继承的限制</p>
+<h2 id="线程终止"><a href="#线程终止" class="headerlink" title="线程终止"></a>线程终止</h2><ol>
+<li>当线程完成任务后，会自动退出</li>
+<li>可以通过使用变量来控制run方法退出的方式停止线程，即<strong>通知方式</strong></li>
+</ol>
+<h2 id="线程常用方法："><a href="#线程常用方法：" class="headerlink" title="线程常用方法："></a>线程常用方法：</h2><blockquote>
+<p><strong>设置线程名称，使之与参数name相同：</strong>    setName()</p>
+<p><strong>返回该线程的名称：</strong>    getName()</p>
+<p><strong>执行线程：</strong>    start()</p>
+<p><strong>调用线程run方法：</strong>    run()</p>
+<p><strong>更改线程的优先级：</strong>    setPriority()</p>
+<p><strong>获取线程的优先级：</strong>    getPriority()</p>
+<p><strong>使线程休眠：</strong>    sleep()</p>
+<p><strong>终端线程：</strong>    interrupt()</p>
+</blockquote>
+<p><strong>另外两种方法：</strong></p>
+<ol>
+<li>yield()    线程的礼让，让出cpu，让其他线程执行，但礼让的时间不确定，所以也不一定礼让成功</li>
+<li>join()    插队，插队的线程一旦插队成功，则肯定先执行完插入的线程所有的子任务</li>
+</ol>
+<h2 id="用户线程和守护线程"><a href="#用户线程和守护线程" class="headerlink" title="用户线程和守护线程"></a>用户线程和守护线程</h2><ol>
+<li>用户线程：也叫工作线程，当线程的任务执行完或通知的方式结束</li>
+<li>守护线程：一般是为工作线程服务的，当所有的用户线程结束，守护线程自动结束</li>
+<li>常见的守护线程：垃圾回收机制</li>
+<li>setDaemon(true)即设置成了守护线程</li>
+</ol>
+<h2 id="线程的六种状态"><a href="#线程的六种状态" class="headerlink" title="线程的六种状态"></a>线程的六种状态</h2><p>在jdk中线程有六种状态</p>
+<ol>
+<li>new 尚未启动的线程处于此状态</li>
+<li>runnable 在java虚拟机中执行的线程处于此状态</li>
+<li>blocked 被阻塞等待监视器锁定的线程处于此状态</li>
+<li>waiting 正在等待另一个线程执行特定动作的线程处于此状态</li>
+<li>timed_waiting 正在等待另一个线程执行动作达到指定等待时间的线程处于此状态</li>
+<li>terminated 已退出的线程处于此状态</li>
+</ol>
+<p>在有些书上面会说有七种，因为他们把runnable细化成ready和running</p>
+<h2 id="线程同步机制"><a href="#线程同步机制" class="headerlink" title="线程同步机制"></a>线程同步机制</h2><p>在多线程编程种，一些敏感数据不允许被多个线程同时访问，此时就使用同步访问技术，保证数据在任何同一时刻，最多有一个线程访问，以保证数据的完整性</p>
+<p>同步方法：用Synchronized修饰</p>
+<h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><p>java语言中，引入了对象互斥锁的概念，来保证共享数据操作的完整性，每个对象都对应于一个可称为“互斥锁”的标记，这个标记用来保证在任一时刻，只能有一个线程来访问该对象，Synchronized来与对象的互斥锁联系。</p>
+<p>同步方法（非静态）的锁可以是this，也可以是其他对象（要求是同一个对象）；同步方法（静态）的锁为当前类本身。</p>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>多个线程都占用了对方的锁的资源，但不肯相让，导致了死锁。</p>
+<h2 id="释放锁"><a href="#释放锁" class="headerlink" title="释放锁"></a>释放锁</h2><p><strong>释放锁的操作：</strong></p>
+<ol>
+<li>当钱线程的同步方法、同步代码块执行结束</li>
+<li>当前线程在同步代码块、同步方法种遇到break、return</li>
+<li>当前线程在同步代码块、同步方法种出现了未处理的Error或Exception，导致异常结束</li>
+<li>当前线程在同步代码块、同步方法种执行了线程对象的wait()方法，当前线程暂停，并释放锁</li>
+</ol>
+<p><strong>不会释放锁的操作：</strong></p>
+<ol>
+<li>线程执行同步代码块或同步方法时，程序调用Thread.sleep()、Thread.yield()0方法暂停当前线程的执行，不会释放锁</li>
+<li>线程执行同步代码块时，其他线程调用了该线程的suspend()方法将该线程挂起，该吸纳成不会释放锁</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E7%AC%94%E8%AE%B0/">java笔记</a>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E7%AC%94%E8%AE%B0/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java%E7%AC%94%E8%AE%B0/">java笔记</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/11/28/java%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%9B%86%E5%90%88/">
+                        <span class="hidden-mobile">java笔记之集合</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
