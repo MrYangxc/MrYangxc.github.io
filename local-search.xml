@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title></title>
+    <link href="/2023/08/29/%E5%AE%9E%E8%B7%B5%E5%86%85%E5%AE%B9%E5%AE%A3%E4%BC%A0/"/>
+    <url>/2023/08/29/%E5%AE%9E%E8%B7%B5%E5%86%85%E5%AE%B9%E5%AE%A3%E4%BC%A0/</url>
+    
+    <content type="html"><![CDATA[<p><img src="C:\Users\86189\AppData\Roaming\Typora\typora-user-images\1693306812988.png" alt="1693306812988"></p><p>​          实践团参观王杰部队  </p><p><img src="C:\Users\86189\AppData\Roaming\Typora\typora-user-images\1693306893459.png" alt="1693306893459"></p><p>​实践团在王杰中学进行宣讲</p><p><img src="C:\Users\86189\AppData\Roaming\Typora\typora-user-images\1693306910590.png" alt="1693306910590"></p><p>​2022级入党积极分子共读王杰日记</p><p>​计算机科学与技术学院2022级党支部组成的红色攻城狮实践团利用课余时间开展“再读王杰日记，赓续红色血脉”长期活动。</p><p>​此次活动实践内容丰富，以探寻王杰精神，传承红色文化为目的，实践团成员首先前往王杰部队参观学习，在王杰事迹陈列馆中聆听王杰故事，身临其境感悟王杰的“一不怕苦，二不怕死”精神内核。</p><p>​离开王杰部队后，实践团成员们接着前往王杰中学进行宣讲，将已有学习成果分享于王杰中学的学子们后，接着与王杰中学学子们关于王杰精神进行探讨与互动，收获颇丰。实践团成员们在与王杰中学学子的讨论之中不仅达到了传承王杰精神、传播红色文化的目的，同时也在共同探索的过程中对于王杰精神有了全新的感悟。</p><p>​返回学校后，活动实践团成员们与计算机科学与技术学院2022级入党积极分子们共同阅读王杰日记，感受王杰精神的魅力，深入学习王杰精神的内核。</p><p>​这些实践活动帮助同学们深入理解王杰精神，以王杰为榜样，成为勇于担当的新时代青年人。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ubuntu学习笔记</title>
     <link href="/2023/03/10/ubuntu%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <url>/2023/03/10/ubuntu%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
@@ -272,7 +285,7 @@
     <link href="/2022/11/24/git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"/>
     <url>/2022/11/24/git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
     
-    <content type="html"><![CDATA[<h1 id="Git常用指令"><a href="#Git常用指令" class="headerlink" title="Git常用指令"></a>Git常用指令</h1><p>这是建立在git与github建立连接基础上使用的指令，建立连接的指令跳转到下一个目录</p><blockquote><p><strong>git status</strong>    查看仓库状态</p></blockquote><blockquote><p><strong>git init</strong>    初始化仓库</p></blockquote><blockquote><p><strong>git add file.suffix</strong>    将file文件添加到临时缓存区</p></blockquote><blockquote><p><strong>git commit -m “file”</strong>    将file文件添加到Git仓库</p></blockquote><blockquote><p><strong>git log</strong>    显示提交日志</p></blockquote><blockquote><p><strong>git branch</strong>    查看Git仓库分支状态</p></blockquote><blockquote><p><strong>git branch a</strong>    建立一个名为a的分支</p></blockquote><blockquote><p><strong>git checkout a</strong>    切换到a分支</p></blockquote><blockquote><p><strong>git check out -b a</strong>    直接切换到新建立的a分支</p></blockquote><blockquote><p> <strong>git merge a</strong>    将a分支合并到当前所在的分支</p></blockquote><blockquote><p><strong>git branch -d a</strong>    删除a分支</p></blockquote><blockquote><p><strong>git branch -D a</strong>    如果删除不了，可以大写D强行删除</p></blockquote><blockquote><p><strong>git tag</strong>    查看当前标签记录</p></blockquote><blockquote><p><strong>git tag a</strong>    为当前分支添加一个标签</p></blockquote><blockquote><p><strong>git checkout a</strong>    切换到当前标签下的代码状态</p></blockquote><blockquote><p><strong>git clone http</strong>    克隆想要的项目到当前Git的文件夹下</p></blockquote><h1 id="Git与github建立连接"><a href="#Git与github建立连接" class="headerlink" title="Git与github建立连接"></a>Git与github建立连接</h1><blockquote><p> <strong>ssh-keygen -t rsa</strong>    通过RSA算法生成密钥，将id_rsa.pub文件的内容添加到github上</p></blockquote><blockquote><p> <strong>ssh -T <a href="mailto:&#103;&#x69;&#116;&#x40;&#103;&#x69;&#116;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#x6d;">&#103;&#x69;&#116;&#x40;&#103;&#x69;&#116;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#x6d;</a></strong>    测试密钥是否与公钥进行连接</p></blockquote><blockquote><p><strong>git push origin master(main)</strong>    将本地文件推送到仓库中</p></blockquote><blockquote><p><strong>git pull origin master(main)</strong>    将仓库文件获取到本地中</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="Git常用指令"><a href="#Git常用指令" class="headerlink" title="Git常用指令"></a>Git常用指令</h1><p>这是建立在git与github建立连接基础上使用的指令，建立连接的指令跳转到下一个目录</p><blockquote><p><strong>git status</strong>    查看仓库状态</p></blockquote><blockquote><p><strong>git init</strong>    初始化仓库</p></blockquote><blockquote><p><strong>git add file.suffix</strong>    将file文件添加到临时缓存区</p></blockquote><blockquote><p><strong>git commit -m “file”</strong>    将file文件添加到Git仓库</p></blockquote><blockquote><p><strong>git log</strong>    显示提交日志</p></blockquote><blockquote><p><strong>git branch</strong>    查看Git仓库分支状态</p></blockquote><blockquote><p><strong>git branch a</strong>    建立一个名为a的分支</p></blockquote><blockquote><p><strong>git checkout a</strong>    切换到a分支</p></blockquote><blockquote><p><strong>git check out -b a</strong>    直接切换到新建立的a分支</p></blockquote><blockquote><p> <strong>git merge a</strong>    将a分支合并到当前所在的分支</p></blockquote><blockquote><p><strong>git branch -d a</strong>    删除a分支</p></blockquote><blockquote><p><strong>git branch -D a</strong>    如果删除不了，可以大写D强行删除</p></blockquote><blockquote><p><strong>git tag</strong>    查看当前标签记录</p></blockquote><blockquote><p><strong>git tag a</strong>    为当前分支添加一个标签</p></blockquote><blockquote><p><strong>git checkout a</strong>    切换到当前标签下的代码状态</p></blockquote><blockquote><p><strong>git clone http</strong>    克隆想要的项目到当前Git的文件夹下</p></blockquote><h1 id="Git与github建立连接"><a href="#Git与github建立连接" class="headerlink" title="Git与github建立连接"></a>Git与github建立连接</h1><blockquote><p> <strong>ssh-keygen -t rsa</strong>    通过RSA算法生成密钥，将id_rsa.pub文件的内容添加到github上</p></blockquote><blockquote><p> <strong>ssh -T <a href="mailto:&#x67;&#105;&#x74;&#64;&#x67;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#x67;&#105;&#x74;&#64;&#x67;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a></strong>    测试密钥是否与公钥进行连接</p></blockquote><blockquote><p><strong>git push origin master(main)</strong>    将本地文件推送到仓库中</p></blockquote><blockquote><p><strong>git pull origin master(main)</strong>    将仓库文件获取到本地中</p></blockquote>]]></content>
     
     
     <categories>
